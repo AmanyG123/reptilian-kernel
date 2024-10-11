@@ -352,6 +352,28 @@ out_unlock:
  *      operations (as far as semantic preservation is concerned).
  */
 #ifdef CONFIG_MULTIUSER
+
+asmlinkage int get_log_lvl(void) {
+    return log_lvl;
+}
+
+asmlinkage int set_log_lvl(int level) {
+    if (level < 0 || level > 7)
+        return -1;
+    if (!capable(CAP_SYS_ADMIN))
+        return -1;
+    log_lvl = level;
+    return log_lvl;
+}
+
+asmlinkage int log_msg(const char* msg, int level) {
+    char kmsg[128];
+    if (level < 0 || level > log_lvl || copy_from_user(kmsg, msg, 128))
+        return -1;
+    printk(KERN_INFO "%s [pid %d]: %s\n", current->comm, current->pid, kmsg);
+    return level;
+}
+
 long __sys_setregid(gid_t rgid, gid_t egid)
 {
 	struct user_namespace *ns = current_user_ns();
@@ -2313,6 +2335,7 @@ out:
 		error = -EAGAIN;
 	return error;
 }
+static int log_lvl = 0;
 
 static int prctl_set_vma_anon_name(unsigned long start, unsigned long end,
 			unsigned long arg)

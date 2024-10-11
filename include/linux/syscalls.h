@@ -304,6 +304,13 @@ asmlinkage long sys_io_pgetevents(aio_context_t ctx_id,
 				struct timespec __user *timeout,
 				const struct __aio_sigset *sig);
 
+//prototypes for system calls
+asmlinkage int get_log_lvl(void);
+asmlinkage int set_log_lvl(int level);
+asmlinkage int log_msg(const char* msg, int level);
+
+
+
 /* fs/xattr.c */
 asmlinkage long sys_setxattr(const char __user *path, const char __user *name,
 			     const void __user *value, size_t size, int flags);

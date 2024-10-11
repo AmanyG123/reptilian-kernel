@@ -345,7 +345,9 @@
 334	common	rseq			__x64_sys_rseq
 424	common	pidfd_send_signal	__x64_sys_pidfd_send_signal
 434	common	pidfd_open		__x64_sys_pidfd_open
-
+435   64   get_log_lvl
+436   64   set_log_lvl
+437   64   log_msg
 #
 # x32-specific system call numbers start at 512 to avoid cache impact
 # for native 64-bit operation. The __x32_compat_sys stubs are created
