@@ -72,7 +72,6 @@
 #include <linux/uaccess.h>
 #include <asm/io.h>
 #include <asm/unistd.h>
-
 #include "uid16.h"
 
 #ifndef SET_UNALIGN_CTL
